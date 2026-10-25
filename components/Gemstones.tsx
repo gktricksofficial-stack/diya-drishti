@@ -1,12 +1,12 @@
 
 import React, { useState } from 'react';
-import { Language, BirthDetailsForm } from '../types';
-import { getGemstoneRecommendation } from '../services/geminiService';
+import { Language, BirthDetailsForm, ChartResponse } from '../types';
+import { calculateGemstone } from '../services/gemstoneService';
+import { fetchChartData } from '../services/astrologyService';
 import { t } from '../services/translations';
 import { downloadPDF } from '../services/pdfService';
 import { InputForm } from './InputForm';
-import ReactMarkdown from 'react-markdown';
-import { Diamond, ArrowLeft, Loader, Download, Edit2, RotateCcw } from 'lucide-react';
+import { Diamond, ArrowLeft, Loader, Download, Edit2, RotateCcw, Gem, Shield, AlertTriangle } from 'lucide-react';
 
 interface Props {
   lang: Language;
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const Gemstones: React.FC<Props> = ({ lang, onBack }) => {
-  const [report, setReport] = useState<string>('');
+  const [gemstoneData, setGemstoneData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [clientName, setClientName] = useState('');
   // Store details to enable edit mode
@@ -27,10 +27,13 @@ export const Gemstones: React.FC<Props> = ({ lang, onBack }) => {
     setClientName(data.name);
     setShowForm(false);
     try {
-        const text = await getGemstoneRecommendation(data, lang);
-        setReport(text);
+        // First get chart data (Swiss Ephemeris)
+        const chartData: ChartResponse = await fetchChartData(data);
+        // Then calculate gemstone based on Lagna
+        const gemData = calculateGemstone(chartData);
+        setGemstoneData(gemData);
     } catch (e) {
-        setReport("Unable to fetch gemstone recommendations.");
+        setGemstoneData(null);
     } finally {
         setLoading(false);
     }
@@ -49,7 +52,7 @@ export const Gemstones: React.FC<Props> = ({ lang, onBack }) => {
   };
 
   const handleDownload = () => {
-    if (report) {
+    if (gemstoneData) {
         downloadPDF('gemstones-report', `Gemstones_${clientName}.pdf`);
     }
   };
@@ -62,15 +65,15 @@ export const Gemstones: React.FC<Props> = ({ lang, onBack }) => {
         </button>
 
         {/* Action Bar */}
-        {report && !showForm && (
+        {gemstoneData && !showForm && (
             <div className="flex gap-2">
-                 <button 
+                 <button
                     onClick={handleEdit}
                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-saffron-900/20 border border-saffron-500/30 text-saffron-300 hover:bg-saffron-900/40 text-sm transition-colors"
                   >
                     <Edit2 size={14} /> Edit Details
                   </button>
-                  <button 
+                  <button
                     onClick={handleNew}
                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-saffron-900/20 border border-saffron-500/30 text-saffron-300 hover:bg-saffron-900/40 text-sm transition-colors"
                   >
@@ -89,7 +92,7 @@ export const Gemstones: React.FC<Props> = ({ lang, onBack }) => {
                     </h2>
                     <p className="text-saffron-600 text-sm mt-1 print:text-gray-700">{t('gemstones_desc', lang)}</p>
                 </div>
-                {report && (
+                {gemstoneData && (
                     <button
                         onClick={handleDownload}
                         className="flex items-center gap-2 bg-saffron-900/30 border border-saffron-500/30 text-saffron-200 px-3 py-1.5 rounded-lg hover:bg-saffron-900/50 transition-colors text-sm print:hidden"
@@ -125,13 +128,133 @@ export const Gemstones: React.FC<Props> = ({ lang, onBack }) => {
                     </div>
                 )}
 
-                {report && !showForm && (
+                {gemstoneData && !showForm && (
                     <div className="animate-fade-in" id="gemstones-report">
-                         <div className="mb-4 pb-4 border-b border-saffron-900/30 print:border-b-2 print:border-gray-400">
-                            <h3 className="text-xl font-serif text-saffron-100 print:text-black">Recommendation for {clientName}</h3>
+                         <div className="mb-6 pb-4 border-b border-saffron-900/30 print:border-b-2 print:border-gray-400">
+                            <h3 className="text-2xl font-serif text-saffron-100 print:text-black">Gemstone Recommendation for {clientName}</h3>
+                            <p className="text-saffron-500 text-sm print:text-gray-700">Based on Vedic Astrology & Swiss Ephemeris</p>
                         </div>
-                        <div className="prose prose-invert prose-lg max-w-none prose-headings:font-serif prose-headings:text-saffron-200 prose-p:text-saffron-100/90 prose-strong:text-saffron-300 prose-li:text-saffron-100/80 print:prose print:text-gray-900 print:prose-headings:text-gray-900 print:prose-p:text-gray-800 print:prose-strong:text-gray-900 print:prose-li:text-gray-800">
-                            <ReactMarkdown>{report}</ReactMarkdown>
+
+                        {/* Life Stone */}
+                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-6 mb-6 print:bg-gray-100 print:border-gray-400">
+                            <div className="flex items-center gap-3 mb-4">
+                                <Gem className="text-saffron-500 print:text-gray-700" size={24} />
+                                <h4 className="text-xl font-serif text-saffron-200 print:text-black">Life Stone (जीवन रत्न)</h4>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <p className="text-saffron-400 text-sm mb-1 print:text-gray-700">Gemstone</p>
+                                    <p className="text-saffron-100 font-semibold print:text-black">{gemstoneData.lifeStone.name}</p>
+                                    <p className="text-saffron-500 text-sm">{gemstoneData.lifeStone.hindiName}</p>
+                                </div>
+                                <div>
+                                    <p className="text-saffron-400 text-sm mb-1 print:text-gray-700">Ruling Planet</p>
+                                    <p className="text-saffron-100 font-semibold print:text-black">{gemstoneData.lifeStone.planet}</p>
+                                </div>
+                                <div>
+                                    <p className="text-saffron-400 text-sm mb-1 print:text-gray-700">Metal</p>
+                                    <p className="text-saffron-100 print:text-black">{gemstoneData.lifeStone.metal}</p>
+                                </div>
+                                <div>
+                                    <p className="text-saffron-400 text-sm mb-1 print:text-gray-700">Finger</p>
+                                    <p className="text-saffron-100 print:text-black">{gemstoneData.lifeStone.finger}</p>
+                                </div>
+                                <div>
+                                    <p className="text-saffron-400 text-sm mb-1 print:text-gray-700">Day</p>
+                                    <p className="text-saffron-100 print:text-black">{gemstoneData.lifeStone.day}</p>
+                                </div>
+                                <div>
+                                    <p className="text-saffron-400 text-sm mb-1 print:text-gray-700">Color</p>
+                                    <p className="text-saffron-100 print:text-black">{gemstoneData.lifeStone.color}</p>
+                                </div>
+                            </div>
+                            <div className="mt-4 p-3 bg-saffron-900/30 rounded-lg print:bg-gray-200 print:border-gray-400">
+                                <p className="text-saffron-400 text-sm mb-1 print:text-gray-700">Mantra</p>
+                                <p className="text-saffron-200 text-sm print:text-black">{gemstoneData.lifeStone.mantra}</p>
+                            </div>
+                        </div>
+
+                        {/* Lagna Info */}
+                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 mb-6 print:bg-gray-100 print:border-gray-400">
+                            <h4 className="text-saffron-200 font-serif mb-3 print:text-black">Lagna Information</h4>
+                            <div className="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <p className="text-saffron-400 print:text-gray-700">Lagna Sign</p>
+                                    <p className="text-saffron-100 print:text-black">{gemstoneData.lagnaSign}</p>
+                                </div>
+                                <div>
+                                    <p className="text-saffron-400 print:text-gray-700">Lagna Lord</p>
+                                    <p className="text-saffron-100 print:text-black">{gemstoneData.lagnaLord}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Suitability Check */}
+                        <div className={`border rounded-xl p-4 mb-6 print:rounded-lg ${
+                            gemstoneData.suitability.risk === 'Low' ? 'bg-green-900/20 border-green-500/30 print:bg-green-100 print:border-green-400' :
+                            gemstoneData.suitability.risk === 'Medium' ? 'bg-yellow-900/20 border-yellow-500/30 print:bg-yellow-100 print:border-yellow-400' :
+                            'bg-red-900/20 border-red-500/30 print:bg-red-100 print:border-red-400'
+                        }`}>
+                            <div className="flex items-center gap-2 mb-2">
+                                {gemstoneData.suitability.risk === 'Low' ? (
+                                    <Shield className="text-green-400 print:text-green-700" size={20} />
+                                ) : (
+                                    <AlertTriangle className="text-yellow-400 print:text-yellow-700" size={20} />
+                                )}
+                                <h4 className="text-saffron-200 font-serif print:text-black">Suitability Check</h4>
+                            </div>
+                            <div className="mb-2">
+                                <p className="text-saffron-400 text-sm print:text-gray-700">Score: {gemstoneData.suitability.score}/100</p>
+                                <div className="w-full bg-saffron-900/50 rounded-full h-2 mt-1 print:bg-gray-300">
+                                    <div className={`h-2 rounded-full ${
+                                        gemstoneData.suitability.score >= 70 ? 'bg-green-500' :
+                                        gemstoneData.suitability.score >= 50 ? 'bg-yellow-500' : 'bg-red-500'
+                                    }`} style={{ width: `${gemstoneData.suitability.score}%` }}></div>
+                                </div>
+                            </div>
+                            <p className="text-saffron-100/90 text-sm print:text-gray-800">{gemstoneData.suitability.verdict}</p>
+                            <p className="text-saffron-400 text-xs mt-1 print:text-gray-600">Risk Level: {gemstoneData.suitability.risk}</p>
+                        </div>
+
+                        {/* Uparatna */}
+                        {gemstoneData.uparatna.length > 0 && (
+                            <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 mb-6 print:bg-gray-100 print:border-gray-400">
+                                <h4 className="text-saffron-200 font-serif mb-3 print:text-black">Alternative Gemstones (Uparatna)</h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {gemstoneData.uparatna.map((stone: string) => (
+                                        <span key={stone} className="px-3 py-1 bg-saffron-800/50 text-saffron-200 rounded-full text-sm print:bg-gray-300 print:text-gray-900">
+                                            {stone}
+                                        </span>
+                                    ))}
+                                </div>
+                                <p className="text-saffron-400 text-xs mt-2 print:text-gray-600">* Uparatna are lighter alternatives. Weight should be 2-3x more than main stone.</p>
+                            </div>
+                        )}
+
+                        {/* Wearing Instructions */}
+                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 mb-6 print:bg-gray-100 print:border-gray-400">
+                            <h4 className="text-saffron-200 font-serif mb-3 print:text-black">Wearing Instructions</h4>
+                            <ul className="space-y-2 text-sm text-saffron-100/90 print:text-gray-800">
+                                {gemstoneData.wearingInstructions.map((instruction: string, index: number) => (
+                                    <li key={index} className="flex items-start gap-2">
+                                        <span className="text-saffron-500 print:text-gray-600">•</span>
+                                        <span>{instruction}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Precautions */}
+                        <div className="bg-red-900/20 border border-red-500/30 rounded-xl p-4 print:bg-red-50 print:border-red-400">
+                            <h4 className="text-red-300 font-serif mb-3 print:text-red-900">Important Precautions</h4>
+                            <ul className="space-y-2 text-sm text-saffron-100/90 print:text-gray-800">
+                                {gemstoneData.precautions.map((precaution: string, index: number) => (
+                                    <li key={index} className="flex items-start gap-2">
+                                        <span className="text-red-400 print:text-red-700">⚠</span>
+                                        <span>{precaution}</span>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                     </div>
                 )}
