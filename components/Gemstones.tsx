@@ -136,7 +136,7 @@ export const Gemstones: React.FC<Props> = ({ lang, onBack }) => {
                         </div>
 
                         {/* Life Stone */}
-                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-6 mb-6 print:bg-gray-100 print:border-gray-400">
+                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-6 mb-6 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
                             <div className="flex items-center gap-3 mb-4">
                                 <Gem className="text-saffron-500 print:text-gray-700" size={24} />
                                 <h4 className="text-xl font-serif text-saffron-200 print:text-black">Life Stone (जीवन रत्न)</h4>
@@ -145,7 +145,7 @@ export const Gemstones: React.FC<Props> = ({ lang, onBack }) => {
                                 <div>
                                     <p className="text-saffron-400 text-sm mb-1 print:text-gray-700">Gemstone</p>
                                     <p className="text-saffron-100 font-semibold print:text-black">{gemstoneData.lifeStone.name}</p>
-                                    <p className="text-saffron-500 text-sm">{gemstoneData.lifeStone.hindiName}</p>
+                                    <p className="text-saffron-500 text-sm print:text-gray-600">{gemstoneData.lifeStone.hindiName}</p>
                                 </div>
                                 <div>
                                     <p className="text-saffron-400 text-sm mb-1 print:text-gray-700">Ruling Planet</p>
@@ -168,14 +168,14 @@ export const Gemstones: React.FC<Props> = ({ lang, onBack }) => {
                                     <p className="text-saffron-100 print:text-black">{gemstoneData.lifeStone.color}</p>
                                 </div>
                             </div>
-                            <div className="mt-4 p-3 bg-saffron-900/30 rounded-lg print:bg-gray-200 print:border-gray-400">
+                            <div className="mt-4 p-3 bg-saffron-900/30 rounded-lg print:bg-gray-100 print:border print:border-gray-400">
                                 <p className="text-saffron-400 text-sm mb-1 print:text-gray-700">Mantra</p>
                                 <p className="text-saffron-200 text-sm print:text-black">{gemstoneData.lifeStone.mantra}</p>
                             </div>
                         </div>
 
                         {/* Lagna Info */}
-                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 mb-6 print:bg-gray-100 print:border-gray-400">
+                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 mb-6 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
                             <h4 className="text-saffron-200 font-serif mb-3 print:text-black">Lagna Information</h4>
                             <div className="grid grid-cols-2 gap-4 text-sm">
                                 <div>
@@ -190,10 +190,10 @@ export const Gemstones: React.FC<Props> = ({ lang, onBack }) => {
                         </div>
 
                         {/* Suitability Check */}
-                        <div className={`border rounded-xl p-4 mb-6 print:rounded-lg ${
-                            gemstoneData.suitability.risk === 'Low' ? 'bg-green-900/20 border-green-500/30 print:bg-green-100 print:border-green-400' :
-                            gemstoneData.suitability.risk === 'Medium' ? 'bg-yellow-900/20 border-yellow-500/30 print:bg-yellow-100 print:border-yellow-400' :
-                            'bg-red-900/20 border-red-500/30 print:bg-red-100 print:border-red-400'
+                        <div className={`border rounded-xl p-4 mb-6 print:rounded-lg print:border-2 ${
+                            gemstoneData.suitability.risk === 'Low' ? 'bg-green-900/20 border-green-500/30 print:bg-green-100 print:border-green-500' :
+                            gemstoneData.suitability.risk === 'Medium' ? 'bg-yellow-900/20 border-yellow-500/30 print:bg-yellow-100 print:border-yellow-500' :
+                            'bg-red-900/20 border-red-500/30 print:bg-red-100 print:border-red-500'
                         }`}>
                             <div className="flex items-center gap-2 mb-2">
                                 {gemstoneData.suitability.risk === 'Low' ? (
@@ -218,11 +218,11 @@ export const Gemstones: React.FC<Props> = ({ lang, onBack }) => {
 
                         {/* Uparatna */}
                         {gemstoneData.uparatna.length > 0 && (
-                            <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 mb-6 print:bg-gray-100 print:border-gray-400">
+                            <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 mb-6 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
                                 <h4 className="text-saffron-200 font-serif mb-3 print:text-black">Alternative Gemstones (Uparatna)</h4>
                                 <div className="flex flex-wrap gap-2">
                                     {gemstoneData.uparatna.map((stone: string) => (
-                                        <span key={stone} className="px-3 py-1 bg-saffron-800/50 text-saffron-200 rounded-full text-sm print:bg-gray-300 print:text-gray-900">
+                                        <span key={stone} className="px-3 py-1 bg-saffron-800/50 text-saffron-200 rounded-full text-sm print:bg-gray-200 print:text-gray-900 print:border print:border-gray-400">
                                             {stone}
                                         </span>
                                     ))}
@@ -232,7 +232,7 @@ export const Gemstones: React.FC<Props> = ({ lang, onBack }) => {
                         )}
 
                         {/* Wearing Instructions */}
-                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 mb-6 print:bg-gray-100 print:border-gray-400">
+                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 mb-6 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
                             <h4 className="text-saffron-200 font-serif mb-3 print:text-black">Wearing Instructions</h4>
                             <ul className="space-y-2 text-sm text-saffron-100/90 print:text-gray-800">
                                 {gemstoneData.wearingInstructions.map((instruction: string, index: number) => (
@@ -245,7 +245,7 @@ export const Gemstones: React.FC<Props> = ({ lang, onBack }) => {
                         </div>
 
                         {/* Precautions */}
-                        <div className="bg-red-900/20 border border-red-500/30 rounded-xl p-4 print:bg-red-50 print:border-red-400">
+                        <div className="bg-red-900/20 border border-red-500/30 rounded-xl p-4 print:bg-red-50 print:border-2 print:border-red-400 print:shadow-none">
                             <h4 className="text-red-300 font-serif mb-3 print:text-red-900">Important Precautions</h4>
                             <ul className="space-y-2 text-sm text-saffron-100/90 print:text-gray-800">
                                 {gemstoneData.precautions.map((precaution: string, index: number) => (

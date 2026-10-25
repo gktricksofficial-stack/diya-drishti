@@ -145,7 +145,7 @@ export const Numerology: React.FC<Props> = ({ lang, onBack }) => {
                     {/* Numbers Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         {/* Mulank */}
-                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-gray-100 print:border-gray-400">
+                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
                             <div className="flex items-center gap-2 mb-2">
                                 <Star className="text-saffron-500 print:text-gray-700" size={20} />
                                 <h4 className="text-saffron-200 font-serif print:text-black">Mulank (Birth Number)</h4>
@@ -159,7 +159,7 @@ export const Numerology: React.FC<Props> = ({ lang, onBack }) => {
                         </div>
 
                         {/* Bhagyank */}
-                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-gray-100 print:border-gray-400">
+                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
                             <div className="flex items-center gap-2 mb-2">
                                 <Sparkles className="text-saffron-500 print:text-gray-700" size={20} />
                                 <h4 className="text-saffron-200 font-serif print:text-black">Bhagyank (Destiny)</h4>
@@ -174,7 +174,7 @@ export const Numerology: React.FC<Props> = ({ lang, onBack }) => {
 
                         {/* Naamank */}
                         {numerologyData.naamank && (
-                            <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-gray-100 print:border-gray-400">
+                            <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
                                 <div className="flex items-center gap-2 mb-2">
                                     <Calculator className="text-saffron-500 print:text-gray-700" size={20} />
                                     <h4 className="text-saffron-200 font-serif print:text-black">Naamank (Name)</h4>
@@ -188,11 +188,11 @@ export const Numerology: React.FC<Props> = ({ lang, onBack }) => {
                     </div>
 
                     {/* Lucky Dates */}
-                    <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 mb-6 print:bg-gray-100 print:border-gray-400">
+                    <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 mb-6 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
                         <h4 className="text-saffron-200 font-serif mb-3 print:text-black">Lucky Dates (Birth Dates)</h4>
                         <div className="flex flex-wrap gap-2">
                             {numerologyData.luckyDates.map((date: number) => (
-                                <span key={date} className="px-3 py-1 bg-saffron-800/50 text-saffron-200 rounded-full text-sm print:bg-gray-300 print:text-gray-900">
+                                <span key={date} className="px-3 py-1 bg-saffron-800/50 text-saffron-200 rounded-full text-sm print:bg-gray-200 print:text-gray-900 print:border print:border-gray-400">
                                     {date}
                                 </span>
                             ))}
@@ -201,18 +201,18 @@ export const Numerology: React.FC<Props> = ({ lang, onBack }) => {
 
                     {/* Interpretations */}
                     <div className="space-y-4">
-                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-gray-100 print:border-gray-400">
+                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
                             <h4 className="text-saffron-200 font-serif mb-2 print:text-black">Mulank Interpretation</h4>
                             <p className="text-saffron-100/90 text-sm leading-relaxed print:text-gray-800">{numerologyData.interpretation.mulank}</p>
                         </div>
 
-                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-gray-100 print:border-gray-400">
+                        <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
                             <h4 className="text-saffron-200 font-serif mb-2 print:text-black">Bhagyank Interpretation</h4>
                             <p className="text-saffron-100/90 text-sm leading-relaxed print:text-gray-800">{numerologyData.interpretation.bhagyank}</p>
                         </div>
 
                         {numerologyData.interpretation.naamank && (
-                            <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-gray-100 print:border-gray-400">
+                            <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
                                 <h4 className="text-saffron-200 font-serif mb-2 print:text-black">Naamank Interpretation</h4>
                                 <p className="text-saffron-100/90 text-sm leading-relaxed print:text-gray-800">{numerologyData.interpretation.naamank}</p>
                             </div>
