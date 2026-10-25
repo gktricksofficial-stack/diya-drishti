@@ -8,7 +8,6 @@ import ReactMarkdown from 'react-markdown';
 interface Props {
   lang: Language;
   onNavigate: (view: AppView) => void;
-  onOpenPremium: () => void;
 }
 
 interface Message {
@@ -22,7 +21,7 @@ interface Message {
   };
 }
 
-export const GlobalAssistant: React.FC<Props> = ({ lang, onNavigate, onOpenPremium }) => {
+export const GlobalAssistant: React.FC<Props> = ({ lang, onNavigate }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   
@@ -117,11 +116,9 @@ export const GlobalAssistant: React.FC<Props> = ({ lang, onNavigate, onOpenPremi
           if (target.includes('gem')) target = 'gemstones';
           if (target.includes('kundali') || target.includes('birth')) target = 'kundali';
           if (target.includes('match')) target = 'matching';
-          
+
           onNavigate(target as AppView);
           setIsOpen(false); // Close chat on navigation to show the tool
-      } else if (action.type === 'premium') {
-          onOpenPremium(); 
       }
   };
 

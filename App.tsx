@@ -14,7 +14,6 @@ import { Numerology } from './components/Numerology';
 import { Gemstones } from './components/Gemstones';
 import { LanguageSwitch } from './components/LanguageSwitch';
 import { CosmicBackground } from './components/CosmicBackground';
-import { PremiumModal } from './components/PremiumModal';
 import { GlobalAssistant } from './components/GlobalAssistant';
 import { UserProfile, BirthDetailsForm, ChartResponse, AppView, Language } from './types';
 import { fetchChartData } from './services/astrologyService';
@@ -279,14 +278,6 @@ const SupportModal: React.FC<{ type: SupportType; onClose: () => void }> = ({ ty
     );
 };
 
-interface PaymentConfig {
-    type: 'subscription' | 'one-time';
-    amount?: number;
-    title?: string;
-    description?: string;
-    onSuccess: () => void;
-}
-
 const Footer: React.FC<{ lang: Language, onNavigate: (view: AppView) => void }> = ({ lang, onNavigate }) => {
     const [legalInfo, setLegalInfo] = useState<{ title: string; content: string } | null>(null);
     const [supportModal, setSupportModal] = useState<SupportType | null>(null);
@@ -380,7 +371,6 @@ const App: React.FC = () => {
 
   const [view, setView] = useState<AppView>('dashboard');
   const [lang, setLang] = useState<Language>('en');
-  const [paymentConfig, setPaymentConfig] = useState<PaymentConfig | null>(null);
   
   // Persist User State
   useEffect(() => {
@@ -424,50 +414,12 @@ const App: React.FC = () => {
     localStorage.removeItem('divya_drishti_user');
   };
 
-  const openSubscriptionModal = () => {
-      setPaymentConfig({
-          type: 'subscription',
-          onSuccess: () => {
-              if (user) setUser({ ...user, isPremium: true });
-              setPaymentConfig(null);
-          }
-      });
-  };
-
   const handleChartDownloadRequest = () => {
-      // If premium, direct download
-      if (user?.isPremium) {
-          downloadPDF('chart-report', 'Kundali_Chart.pdf');
-          return;
-      }
-
-      // Else, charge ₹3 (Updated)
-      setPaymentConfig({
-          type: 'one-time',
-          amount: 3,
-          title: "Unlock Chart Download",
-          description: "High-Quality PDF Report",
-          onSuccess: () => {
-              downloadPDF('chart-report', 'Kundali_Chart.pdf');
-              setPaymentConfig(null);
-          }
-      });
+      // PDF download is now free for everyone
+      downloadPDF('chart-report', 'Kundali_Chart.pdf');
   };
 
   const handleChartGeneration = async (details: BirthDetailsForm) => {
-    // Check Limit: First 3 charts free
-    if (user && !user.isPremium && (user.chartCount || 0) >= 3) {
-        setPaymentConfig({
-            type: 'subscription',
-            title: "Free Limit Reached",
-            description: "You have used your 3 free charts. Upgrade to Premium to continue unlocking cosmic wisdom.",
-            onSuccess: () => {
-                setUser(prev => prev ? ({ ...prev, isPremium: true }) : null);
-                setPaymentConfig(null);
-            }
-        });
-        return;
-    }
 
     setIsLoading(true);
     setBirthDetails(details);
@@ -619,27 +571,15 @@ const App: React.FC = () => {
                   icon={<Calculator size={32} />} 
                   title={t('numerology', lang)} 
                   desc={t('numerology_desc', lang)}
-                  onClick={() => {
-                     if (user?.isPremium) {
-                         setView('numerology');
-                     } else {
-                         openSubscriptionModal();
-                     }
-                  }}
-                  isLocked={!user?.isPremium}
+                  onClick={() => setView('numerology')}
+                  isLocked={false}
                 />
                 <FeatureCard 
                   icon={<Diamond size={32} />} 
                   title={t('gemstones', lang)} 
                   desc={t('gemstones_desc', lang)}
-                  onClick={() => {
-                     if (user?.isPremium) {
-                         setView('gemstones');
-                     } else {
-                         openSubscriptionModal();
-                     }
-                  }}
-                  isLocked={!user?.isPremium}
+                  onClick={() => setView('gemstones')}
+                  isLocked={false}
                 />
              </div>
            </div>
@@ -668,20 +608,10 @@ const App: React.FC = () => {
                     <span className="font-serif text-lg sm:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-saffron-400 to-red-400 py-1 leading-normal">
                       {t('app_name', lang)}
                     </span>
-                    {user.isPremium && <span className="text-[10px] bg-gradient-to-r from-saffron-400 to-yellow-200 text-black px-2 py-0.5 rounded-full font-bold ml-1 flex items-center gap-1"><Crown size={10}/> PRO</span>}
                   </div>
-                  
+
                   <div className="flex items-center gap-3 md:gap-4">
                       <LanguageSwitch lang={lang} setLang={setLang} />
-                      
-                      {!user.isPremium && (
-                          <button 
-                            onClick={openSubscriptionModal}
-                            className="hidden sm:flex items-center gap-1 bg-gradient-to-r from-saffron-600 to-red-600 hover:from-saffron-500 hover:to-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg shadow-saffron-900/20 transition-all transform hover:scale-105"
-                          >
-                             <Crown size={14} /> Go Premium
-                          </button>
-                      )}
 
                       <button 
                         onClick={() => setView('dashboard')}
@@ -742,22 +672,7 @@ const App: React.FC = () => {
         </div>
         
         {/* Global Assistant Chatbot - Only when logged in */}
-        {user && <GlobalAssistant lang={lang} onNavigate={setView} onOpenPremium={openSubscriptionModal} />}
-
-        {/* Premium/Payment Modal */}
-        {paymentConfig && (
-            <PremiumModal 
-                onClose={() => setPaymentConfig(null)}
-                onSuccess={paymentConfig.onSuccess}
-                lang={lang}
-                config={{
-                    type: paymentConfig.type,
-                    amount: paymentConfig.amount,
-                    title: paymentConfig.title,
-                    description: paymentConfig.description
-                }}
-            />
-        )}
+        {user && <GlobalAssistant lang={lang} onNavigate={setView} onOpenPremium={() => {}} />}
 
       </div>
     </HashRouter>
