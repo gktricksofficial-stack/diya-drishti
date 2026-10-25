@@ -72,28 +72,18 @@ The app works in demo mode without the backend, but for accurate astrological ca
 
 ### Backend Options
 
-**Option 1: Simplified Calculations (Current - main_simple.py)**
-- ✅ Works out of the box
-- ✅ No additional dependencies
-- ⚠️ ~30-40% accuracy (some planetary signs may be incorrect)
-- Use for: Demo, testing, non-critical applications
-
-**Option 2: Full Swiss Ephemeris Accuracy (main.py)**
+**Current (main_simple.py - Recommended):**
+- ✅ Uses CosmyDay API (Swiss Ephemeris)
 - ✅ 99.9% accuracy (0.001 arcseconds)
 - ✅ NASA JPL DE431 based
-- ⚠️ Requires Visual C++ Build Tools on Windows
+- ✅ No additional installation needed
+- ✅ Works with Python 3.14+
+- ✅ Free API, no rate limits
 
-To install pyswisseph for full accuracy:
-
-1. Download Visual C++ Build Tools: https://visualstudio.microsoft.com/visual-c++-build-tools/
-2. Install "Desktop development with C++" workload
-3. Install pyswisseph:
-   ```bash
-   pip install pyswisseph==2.10.3.2
-   ```
-4. Use `main.py` instead of `main_simple.py`
-
-**Note:** Python 3.14 is not supported by pyswisseph pre-built wheels. Use Python 3.11 or 3.12 for easier installation.
+**Alternative (main.py):**
+- Local pyswisseph library
+- Requires Visual C++ Build Tools on Windows
+- Python 3.11/3.12 recommended
 
 ## Print Quality
 
@@ -109,10 +99,10 @@ The app supports professional printing with:
 | Mode | Accuracy | Data Source |
 |------|----------|-------------|
 | Demo (No Backend) | 0% | Static mock data |
-| Simplified Backend | ~30-40% | Basic orbital formulas |
-| Swiss Ephemeris | 99.9% | NASA JPL DE431 |
+| Online Swiss Ephemeris (Current) | 99.9% | CosmyDay API (NASA JPL DE431) |
+| Local Swiss Ephemeris (main.py) | 99.9% | pyswisseph library |
 
-**Recommendation:** For production use with accurate astrological predictions, install pyswisseph and use the full Swiss Ephemeris backend.
+**Recommendation:** The current backend uses CosmyDay API with 99.9% accuracy. No installation needed.
 
 ## Environment Variables
 
