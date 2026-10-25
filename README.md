@@ -4,20 +4,15 @@
 
 # Divya Drishti - Vedic Astrology App
 
-A comprehensive Vedic astrology application built with React, Python, and AI-powered insights.
-
-View your app in AI Studio: https://ai.studio/apps/drive/17u8t-V4AS592eNc5NKkhxBaib7ehQjIE
+A comprehensive Vedic astrology application built with React and Python, featuring accurate Swiss Ephemeris calculations.
 
 ## Features
 
-- **Janampatri (Birth Chart)** - Planetary positions using Swiss Ephemeris
-- **Daily Horoscope (Rashifal)** - AI-powered daily predictions via Gemini AI
+- **Janampatri (Birth Chart)** - Planetary positions using Swiss Ephemeris (99.9% accuracy)
 - **Kundali Matching** - Vedic Ashtakoota compatibility analysis
-- **Panchang** - Daily Vedic calendar (Tithi, Nakshatra, etc.)
-- **Numerology** - Life Path and Destiny numbers (Premium)
-- **Gemstones** - Gemstone recommendations based on birth chart (Premium)
 - **Multi-language Support** - English, Hindi, Marathi, Bengali, Gujarati, Tamil, Telugu, Kannada, Malayalam
 - **Professional PDF Export** - High-quality print-ready reports
+- **Free & Open Source** - No API keys, no paid subscriptions
 
 ## Run Locally
 
@@ -103,14 +98,6 @@ The app supports professional printing with:
 | Local Swiss Ephemeris (main.py) | 99.9% | pyswisseph library |
 
 **Recommendation:** The current backend uses CosmyDay API with 99.9% accuracy. No installation needed.
-
-## Environment Variables
-
-Create a `.env.local` file in the root directory:
-
-```
-GEMINI_API_KEY=your_gemini_api_key
-```
 
 ## Project Structure
 

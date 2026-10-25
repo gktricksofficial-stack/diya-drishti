@@ -1,4 +1,7 @@
+// AI Service DISABLED - App now uses 100% free components
+// To enable AI features, uncomment below and add GEMINI_API_KEY to .env.local
 
+/*
 import { GoogleGenAI } from "@google/genai";
 import { ChartResponse, BirthDetailsForm, Language } from '../types';
 
@@ -21,13 +24,13 @@ const getLanguageName = (code: Language): string => {
 };
 
 const SYSTEM_INSTRUCTION = `
-You are "Divya Drishti", an advanced Vedic Astrology AI Sage. 
+You are "Divya Drishti", an advanced Vedic Astrology AI Sage.
 You possess deep ancient wisdom combined with modern analytical precision.
 Your tone should be mystical, respectful, yet highly accurate and specific.
 Never refer to yourself as an AI model; strictly maintain the persona of the Vedic Sage Divya Drishti.
 
 CRITICAL LANGUAGE INSTRUCTION FOR HINDI:
-If the output language is Hindi, use **Simple, Easy-to-Understand Hindi**. 
+If the output language is Hindi, use **Simple, Easy-to-Understand Hindi**.
 - AVOID complex Sanskritized words (e.g., instead of "Dhanarjan", say "Paise kamana").
 - Use conversational flow.
 - Explain astrological terms simply.
@@ -49,18 +52,18 @@ INSTRUCTIONS:
    - If the user says "Hi", "Hello": "Namaste! How can I help you today?"
    - **NEVER** repeat the full "I can help you navigate..." greeting in the middle of a chat.
 
-2. **General Knowledge:** 
-   - If the user asks general questions (e.g., "What is Kundali?", "Why is Saturn important?", "What is Nadi Dosha?"), **ANSWER them briefly**. 
+2. **General Knowledge:**
+   - If the user asks general questions (e.g., "What is Kundali?", "Why is Saturn important?", "What is Nadi Dosha?"), **ANSWER them briefly**.
    - Do NOT just say "Use the tool". Give value.
    - ONLY refuse to give *personal* predictions (e.g., "When will I marry?"). For these, respectfully refer them to the Janampatri tool.
 
-3. **Navigation:** 
+3. **Navigation:**
    - If the user clearly wants to perform a task, use the Action Tag.
    - [NAVIGATE:KUNDALI] for Birth Chart/Future.
    - [NAVIGATE:MATCHING] for Marriage Matching.
    - [NAVIGATE:RASHIFAL] for Daily Horoscope.
 
-4. **Premium Upsell:** 
+4. **Premium Upsell:**
    - If the user asks about Gemstones or Numerology, explain the benefit briefly and suggest upgrading.
    - [PREMIUM:GEMSTONES] or [PREMIUM:NUMEROLOGY]
 
@@ -71,19 +74,19 @@ REQUIRED OUTPUT FORMAT:
 const modelId = "gemini-2.5-flash";
 
 export const getAstrologicalReading = async (
-  birthDetails: BirthDetailsForm, 
-  chartData: ChartResponse, 
+  birthDetails: BirthDetailsForm,
+  chartData: ChartResponse,
   userQuestion: string,
   lang: Language
 ): Promise<string> => {
-  
+
   const langName = getLanguageName(lang);
 
   const context = `
     Language Required: ${langName}
     User Name: ${birthDetails.name}
     Birth Details: ${birthDetails.date} ${birthDetails.time} at ${birthDetails.location}
-    
+
     Chart Data:
     Ascendant: ${chartData.ascendant.sign}
     Planets: ${chartData.planets.map(p => `${p.name} in ${p.sign} (House ${p.house})`).join(', ')}
@@ -92,13 +95,13 @@ export const getAstrologicalReading = async (
   const prompt = `
     ${context}
     User Question: ${userQuestion}
-    
+
     Instructions:
     1. Answer the specific question based on the planetary positions provided.
     2. If the language is Hindi, keep it VERY SIMPLE and conversational.
     3. Provide accurate details but explain them simply.
     4. End with 2-3 specific, easy-to-do Remedies (Upay).
-    
+
     If the question is empty, provide a "Mahadasha & General Life Reading" covering Career, Health, and Finance in ${langName} with simple remedies.
   `;
 
@@ -123,7 +126,7 @@ export const getAppGuideResponse = async (userQuestion: string, lang: Language):
     const prompt = `
       User Input: ${userQuestion}
       Language: ${langName}
-      
+
       Respond as the friendly App Guide.
     `;
 
@@ -145,14 +148,14 @@ export const getDailyRashifal = async (sign: string, lang: Language): Promise<st
     const prompt = `
       Generate a Daily Horoscope for ${sign} for today (${new Date().toLocaleDateString()}).
       Language: ${langName}.
-      
+
       Structure:
       1. General Vibe (2 lines)
       2. Career & Money (Bullet points)
       3. Love & Relationship (Bullet points)
       4. Health
       5. Lucky Color & Number
-      
+
       Tone: Mystical but practical. If Hindi, use simple conversational Hindi.
     `;
 
@@ -174,7 +177,7 @@ export const getPanchang = async (date: string, location: string, lang: Language
     const prompt = `
       Generate the Vedic Panchang for ${date} at location: ${location}.
       Language: ${langName}.
-      
+
       Include:
       - Tithi
       - Nakshatra
@@ -184,7 +187,7 @@ export const getPanchang = async (date: string, location: string, lang: Language
       - Rahu Kaal (Time to avoid)
       - Abhijit Muhurat (Best time)
       - Special Festival (if any)
-      
+
       Format: Clean Markdown list. If Hindi, use simple Hindi.
     `;
 
@@ -246,7 +249,7 @@ export const getGemstoneRecommendation = async (birthDetails: BirthDetailsForm, 
       2. Lucky Stone (For 9th Lord) - Benefits & How to wear.
       3. Benefic Stone (For 5th Lord) - Benefits.
       4. Stones to AVOID (Important).
-      
+
       Format: Markdown. If Hindi, use simple conversational Hindi.
     `;
 
@@ -261,4 +264,30 @@ export const getGemstoneRecommendation = async (birthDetails: BirthDetailsForm, 
         console.error("Gemini Gemstone Error", error);
         return "Unable to recommend gemstones.";
     }
+};
+*/
+
+// Placeholder functions for when AI is disabled
+export const getAstrologicalReading = async (): Promise<string> => {
+  return "AI Oracle feature is currently disabled. This app provides accurate astrological calculations using Swiss Ephemeris.";
+};
+
+export const getAppGuideResponse = async (): Promise<string> => {
+  return "AI Guide is disabled. Use the navigation menu to access features.";
+};
+
+export const getDailyRashifal = async (): Promise<string> => {
+  return "AI-generated horoscopes are disabled. Please check your Kundali for personalized insights.";
+};
+
+export const getPanchang = async (): Promise<string> => {
+  return "AI Panchang is disabled. Use the Kundali chart for planetary positions.";
+};
+
+export const getNumerologyReport = async (): Promise<string> => {
+  return "AI Numerology is disabled. Kundali provides comprehensive astrological insights.";
+};
+
+export const getGemstoneRecommendation = async (): Promise<string> => {
+  return "AI Gemstone recommendations are disabled. Consult a Vedic astrologer for personalized gemstone advice.";
 };
