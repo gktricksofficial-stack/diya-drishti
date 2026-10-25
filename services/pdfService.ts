@@ -49,15 +49,15 @@ export const downloadPDF = async (elementId: string, fileName: string) => {
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
     let heightLeft = imgHeight;
-    let position = margin;
+    let position = 0;
 
-    // Add first page
-    pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+    // Add first page - position starts at 0 (top of image)
+    pdf.addImage(imgData, 'PNG', margin, margin, imgWidth, imgHeight);
     heightLeft -= availableHeight;
 
     // Add additional pages if content exceeds page height
     while (heightLeft > 0) {
-      position = margin - (heightLeft - imgHeight);
+      position = -heightLeft; // Negative position to show next portion
       pdf.addPage();
       pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
       heightLeft -= availableHeight;
