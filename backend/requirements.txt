@@ -4,6 +4,8 @@ pytz==2023.3.post1
 python-multipart==0.0.6
 pydantic==2.5.3
 razorpay==1.3.0
+httpx==0.27.0
 
-# Optional: For full Swiss Ephemeris accuracy (requires Visual C++ Build Tools on Windows)
-# pyswisseph==2.10.3.2
+# Online Swiss Ephemeris API (CosmyDay) - No installation needed
+# Free API with 0.001 arcsecond accuracy (NASA JPL based)
+# https://api.cosmyday.com/natal
