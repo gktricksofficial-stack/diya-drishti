@@ -1,0 +1,7 @@
+{
+  "name": "Divya Drishti",
+  "description": "Advanced Vedic Astrology application powered by NASA-grade algorithms and Gemini AI.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

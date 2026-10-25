@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Divya Drishti | Vedic Astrology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&family=Noto+Serif+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              saffron: {
+                50: '#fff8e1',
+                100: '#ffecb3',
+                200: '#ffe082',
+                300: '#ffd54f',
+                400: '#ffca28',
+                500: '#ffc107',
+                600: '#ffb300',
+                700: '#ffa000',
+                800: '#ff8f00',
+                900: '#ff6f00',
+              },
+              maroon: {
+                800: '#5a0a0a',
+                900: '#3d0505',
+                950: '#1a0505',
+              },
+              gold: '#D4AF37',
+            },
+            fontFamily: {
+              serif: ['Cinzel', 'Noto Serif Devanagari', 'serif'],
+              sans: ['Lato', 'sans-serif'],
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.5s ease-out',
+              'fade-in-up': 'fadeInUp 0.8s ease-out',
+              'slide-up': 'slideUp 0.5s ease-out',
+              'shimmer': 'shimmer 2.5s infinite linear',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(100%)' },
+                '100%': { transform: 'translateY(0)' },
+              },
+              shimmer: {
+                '0%': { transform: 'translateX(-100%)' },
+                '100%': { transform: 'translateX(100%)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #0f0404;
+        color: #fce7cf;
+        overflow-x: hidden;
+        /* Protection: Disable Text Selection */
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      /* Professional Print Styles */
+      @media print {
+        body {
+          background-color: #ffffff !important;
+          color: #000000 !important;
+          -webkit-user-select: text !important;
+          -moz-user-select: text !important;
+          -ms-user-select: text !important;
+          user-select: text !important;
+        }
+
+        /* Hide unnecessary elements */
+        nav, footer, button, .data-html2canvas-ignore {
+          display: none !important;
+        }
+
+        /* Ensure content is visible */
+        html, body {
+          display: block !important;
+        }
+
+        /* Remove backgrounds and shadows */
+        * {
+          box-shadow: none !important;
+          text-shadow: none !important;
+        }
+
+        /* Ensure high contrast */
+        .text-saffron-200, .text-saffron-100, .text-saffron-300, .text-saffron-400 {
+          color: #000000 !important;
+        }
+
+        .text-saffron-500, .text-saffron-600, .text-saffron-800, .text-saffron-900 {
+          color: #333333 !important;
+        }
+
+        /* Backgrounds */
+        .bg-maroon-900, .bg-black, .bg-maroon-900\/30, .bg-maroon-900\/60, .bg-black\/20, .bg-black\/40 {
+          background-color: #ffffff !important;
+        }
+
+        .bg-saffron-900\/20, .bg-saffron-900\/40, .bg-saffron-900\/80 {
+          background-color: #f5f5f5 !important;
+        }
+
+        /* Borders */
+        .border-saffron-900\/30, .border-saffron-900\/50, .border-saffron-800 {
+          border-color: #cccccc !important;
+        }
+
+        /* Status badges */
+        .bg-green-900\/40 {
+          background-color: #d4edda !important;
+          color: #155724 !important;
+        }
+
+        .bg-red-900\/40 {
+          background-color: #f8d7da !important;
+          color: #721c24 !important;
+        }
+
+        /* Page setup */
+        @page {
+          margin: 20mm;
+          size: A4;
+        }
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #2d0a0a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #8e2b0b;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #b53a10;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "firebase/": "https://aistudiocdn.com/firebase@^12.6.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.6",
+    "react-markdown": "https://aistudiocdn.com/react-markdown@^10.1.0",
+    "html2canvas": "https://aistudiocdn.com/html2canvas@^1.4.1",
+    "jspdf": "https://aistudiocdn.com/jspdf@^2.5.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
