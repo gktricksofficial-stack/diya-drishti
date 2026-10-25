@@ -21,8 +21,9 @@ export const downloadPDF = async (elementId: string, fileName: string) => {
     const pdf = new jsPDF('p', 'mm', 'a4');
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = pdf.internal.pageSize.getHeight();
-    const margin = 20;
-    const contentWidth = pdfWidth - (margin * 2);
+    const margin = 15;
+    const availableWidth = pdfWidth - (margin * 2);
+    const availableHeight = pdfHeight - (margin * 2);
 
     // Capture element as canvas with proper scaling
     const canvas = await html2canvas(element, {
@@ -31,8 +32,10 @@ export const downloadPDF = async (elementId: string, fileName: string) => {
       logging: false,
       useCORS: true,
       allowTaint: true,
-      windowWidth: element.scrollWidth + 100, // Ensure full width is captured
-      windowHeight: element.scrollHeight
+      windowWidth: element.scrollWidth,
+      windowHeight: element.scrollHeight,
+      scrollX: 0,
+      scrollY: 0
     });
 
     // Restore original styles
@@ -41,23 +44,23 @@ export const downloadPDF = async (elementId: string, fileName: string) => {
 
     const imgData = canvas.toDataURL('image/png', 1.0);
 
-    // Calculate image dimensions to fit PDF
-    const imgWidth = contentWidth;
+    // Calculate image dimensions to fit PDF width
+    const imgWidth = availableWidth;
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
     let heightLeft = imgHeight;
-    let position = 0;
+    let position = margin;
 
     // Add first page
     pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
-    heightLeft -= (pdfHeight - margin * 2);
+    heightLeft -= availableHeight;
 
     // Add additional pages if content exceeds page height
     while (heightLeft > 0) {
-      position = heightLeft - imgHeight;
+      position = margin - (heightLeft - imgHeight);
       pdf.addPage();
       pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
-      heightLeft -= (pdfHeight - margin * 2);
+      heightLeft -= availableHeight;
     }
 
     pdf.save(fileName);
