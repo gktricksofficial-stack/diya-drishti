@@ -139,22 +139,23 @@ export const Numerology: React.FC<Props> = ({ lang, onBack }) => {
                 <div className="animate-fade-in" id="numerology-report">
                     <div className="mb-6 pb-4 border-b border-saffron-900/30 print:border-b-2 print:border-gray-400">
                         <h3 className="text-2xl font-serif text-saffron-100 print:text-black">{name}</h3>
-                        <p className="text-saffron-500 text-sm print:text-gray-700">DOB: {date}</p>
+                        <p className="text-saffron-500 text-sm print:text-gray-700">जन्म तिथि (DOB): {date}</p>
                     </div>
 
                     {/* Numbers Grid */}
+                    <h4 className="text-lg font-serif text-saffron-400 mb-4 print:text-black">1. अंक विवरण (Number Details)</h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         {/* Mulank */}
                         <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
                             <div className="flex items-center gap-2 mb-2">
                                 <Star className="text-saffron-500 print:text-gray-700" size={20} />
-                                <h4 className="text-saffron-200 font-serif print:text-black">Mulank (Birth Number)</h4>
+                                <h4 className="text-saffron-200 font-serif print:text-black">मूलांक (Mulank)</h4>
                             </div>
                             <div className="text-4xl font-bold text-saffron-100 mb-2 print:text-black">{numerologyData.mulank}</div>
                             <div className="text-sm text-saffron-400 space-y-1 print:text-gray-700">
-                                <p><strong>Planet:</strong> {numerologyData.mulankPlanet}</p>
-                                <p><strong>Color:</strong> {numerologyData.mulankColor}</p>
-                                <p><strong>Day:</strong> {numerologyData.mulankDay}</p>
+                                <p><strong>ग्रह:</strong> {numerologyData.mulankPlanet}</p>
+                                <p><strong>रंग:</strong> {numerologyData.mulankColor}</p>
+                                <p><strong>दिन:</strong> {numerologyData.mulankDay}</p>
                             </div>
                         </div>
 
@@ -162,13 +163,13 @@ export const Numerology: React.FC<Props> = ({ lang, onBack }) => {
                         <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
                             <div className="flex items-center gap-2 mb-2">
                                 <Sparkles className="text-saffron-500 print:text-gray-700" size={20} />
-                                <h4 className="text-saffron-200 font-serif print:text-black">Bhagyank (Destiny)</h4>
+                                <h4 className="text-saffron-200 font-serif print:text-black">भाग्यांक (Bhagyank)</h4>
                             </div>
                             <div className="text-4xl font-bold text-saffron-100 mb-2 print:text-black">{numerologyData.bhagyank}</div>
                             <div className="text-sm text-saffron-400 space-y-1 print:text-gray-700">
-                                <p><strong>Planet:</strong> {numerologyData.bhagyankPlanet}</p>
-                                <p><strong>Color:</strong> {numerologyData.bhagyankColor}</p>
-                                <p><strong>Day:</strong> {numerologyData.bhagyankDay}</p>
+                                <p><strong>ग्रह:</strong> {numerologyData.bhagyankPlanet}</p>
+                                <p><strong>रंग:</strong> {numerologyData.bhagyankColor}</p>
+                                <p><strong>दिन:</strong> {numerologyData.bhagyankDay}</p>
                             </div>
                         </div>
 
@@ -177,19 +178,19 @@ export const Numerology: React.FC<Props> = ({ lang, onBack }) => {
                             <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
                                 <div className="flex items-center gap-2 mb-2">
                                     <Calculator className="text-saffron-500 print:text-gray-700" size={20} />
-                                    <h4 className="text-saffron-200 font-serif print:text-black">Naamank (Name)</h4>
+                                    <h4 className="text-saffron-200 font-serif print:text-black">नामांक (Naamank)</h4>
                                 </div>
                                 <div className="text-4xl font-bold text-saffron-100 mb-2 print:text-black">{numerologyData.naamank}</div>
                                 <div className="text-sm text-saffron-400 print:text-gray-700">
-                                    <p className="font-semibold">Based on Chaldean system</p>
+                                    <p className="font-semibold">काल्दिय पद्धति पर आधारित (Chaldean system)</p>
                                 </div>
                             </div>
                         )}
                     </div>
 
                     {/* Lucky Dates */}
+                    <h4 className="text-lg font-serif text-saffron-400 mb-3 print:text-black">2. शुभ तिथियाँ (Lucky Dates)</h4>
                     <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 mb-6 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
-                        <h4 className="text-saffron-200 font-serif mb-3 print:text-black">Lucky Dates (Birth Dates)</h4>
                         <div className="flex flex-wrap gap-2">
                             {numerologyData.luckyDates.map((date: number) => (
                                 <span key={date} className="px-3 py-1 bg-saffron-800/50 text-saffron-200 rounded-full text-sm print:bg-gray-200 print:text-gray-900 print:border print:border-gray-400">
@@ -200,20 +201,21 @@ export const Numerology: React.FC<Props> = ({ lang, onBack }) => {
                     </div>
 
                     {/* Interpretations */}
+                    <h4 className="text-lg font-serif text-saffron-400 mb-3 print:text-black">3. विवरण (Interpretations)</h4>
                     <div className="space-y-4">
                         <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
-                            <h4 className="text-saffron-200 font-serif mb-2 print:text-black">Mulank Interpretation</h4>
+                            <h4 className="text-saffron-200 font-serif mb-2 print:text-black">मूलांक विवरण (Mulank)</h4>
                             <p className="text-saffron-100/90 text-sm leading-relaxed print:text-gray-800">{numerologyData.interpretation.mulank}</p>
                         </div>
 
                         <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
-                            <h4 className="text-saffron-200 font-serif mb-2 print:text-black">Bhagyank Interpretation</h4>
+                            <h4 className="text-saffron-200 font-serif mb-2 print:text-black">भाग्यांक विवरण (Bhagyank)</h4>
                             <p className="text-saffron-100/90 text-sm leading-relaxed print:text-gray-800">{numerologyData.interpretation.bhagyank}</p>
                         </div>
 
                         {numerologyData.interpretation.naamank && (
                             <div className="bg-saffron-900/20 border border-saffron-500/30 rounded-xl p-4 print:bg-white print:border-2 print:border-gray-400 print:shadow-none">
-                                <h4 className="text-saffron-200 font-serif mb-2 print:text-black">Naamank Interpretation</h4>
+                                <h4 className="text-saffron-200 font-serif mb-2 print:text-black">नामांक विवरण (Naamank)</h4>
                                 <p className="text-saffron-100/90 text-sm leading-relaxed print:text-gray-800">{numerologyData.interpretation.naamank}</p>
                             </div>
                         )}
